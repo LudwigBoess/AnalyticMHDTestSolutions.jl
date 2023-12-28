@@ -1,6 +1,6 @@
 module AnalyticMHDTestSolutions
 
-    using DSAModels 
+    using DiffusiveShockAccelerationModels 
     
     # riemann solvers
     include("sod_shocks/cr_sod_shock_main.jl")
@@ -13,14 +13,14 @@ module AnalyticMHDTestSolutions
 
     export RiemannParameters,    # helper function to set up solution
            solve,                # overloaded function to solve riemann problems
-           find_xs_first_guess,  # helper function to find initial guess for shock compression
+           find_xs_first_guess#,  # helper function to find initial guess for shock compression
 
-           SedovData,
-           SedovParameters,
-           SedovSolution,
-           get_sedov_solution,    # function to get sedov data and ideal solution from sedovdata
-           get_sedov_data_from_gadget,
-           get_sedov_solution_from_gadget
+           #SedovData,
+           #SedovParameters,
+           #SedovSolution,
+           #get_sedov_solution,    # function to get sedov data and ideal solution from sedovdata
+           #get_sedov_data_from_gadget,
+           #get_sedov_solution_from_gadget
 
 
     """
