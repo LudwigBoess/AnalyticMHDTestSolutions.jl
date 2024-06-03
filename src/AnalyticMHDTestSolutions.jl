@@ -1,6 +1,6 @@
 module AnalyticMHDTestSolutions
 
-    using DSAModels 
+    using DiffusiveShockAccelerationModels 
     
     # riemann solvers
     include("sod_shocks/cr_sod_shock_main.jl")
