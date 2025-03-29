@@ -34,7 +34,7 @@ struct SodCRParameters_noCRs
                                     γ_cr::Float64 = 4.0 / 3.0,
                                     thetaB::Float64 = 0.0,
                                     theta_crit::Float64 = (π / 4.0),
-                                    dsa_model::Int64 = -1,
+                                    dsa_model::Union{Int64,<:AbstractShockAccelerationEfficiency}=-1,
                                     xs_first_guess::Float64 = 4.7)
     
         γ_exp = (γ_th - 1.0) / (2.0 * γ_th)
@@ -50,21 +50,23 @@ struct SodCRParameters_noCRs
         end
     
     
-        if dsa_model == 0
-            acc_model = Kang07()
-        elseif dsa_model == 1
-            acc_model = KR13()
-        elseif dsa_model == 2
-            acc_model = Ryu19()
-        elseif dsa_model == 3
-            acc_model = CS14()
-        elseif dsa_model == 4
-            acc_model = P16()
+        if typeof(dsa_model) <: AbstractShockAccelerationEfficiency
+            acc_model = dsa_model
         else
-            error("Invalid DSA model selection!")
-    
+            if dsa_model == 0
+                acc_model = Kang07()
+            elseif dsa_model == 1
+                acc_model = KR13()
+            elseif dsa_model == 2
+                acc_model = Ryu19()
+            elseif dsa_model == 3
+                acc_model = CS14()
+            elseif dsa_model == 4
+                acc_model = P16()
+            else
+                error("Invalid DSA model selection!")
+            end
         end
-    
         # calculate Ur and Pr depending on input
         if (Pr == 0.0) & (Ur != 0.0)
             Pr = (γ_th - 1.0) * rhor * Ur

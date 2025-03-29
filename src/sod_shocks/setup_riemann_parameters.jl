@@ -41,7 +41,7 @@ function RiemannParameters(;rhol::Float64=1.0, rhor::Float64=0.125,      # densi
                             Pe_ratio::Float64=0.01,                      # ratio of proton to electron energy in acceleration
                             thetaB::Float64=0.0,                         # angle between magnetic field and shock normal
                             theta_crit::Float64=(π/4.0),                 # critical angle for B/Shock angle efficiency
-                            dsa_model::Int64=-1,                         # diffuse shock acceleration model
+                            dsa_model::Union{Int64,<:AbstractShockAccelerationEfficiency}=-1,                         # diffuse shock acceleration model
                             xs_first_guess::Float64=4.7,                 # first guess of the resulting shock compression
                             verbose::Bool=false)
 
@@ -140,8 +140,8 @@ Iterates to a first guess of the compression ratio `xs` that gives a solution.
 """
 function find_xs_first_guess(Ul::Float64, Mach::Float64, CR_seed::Float64=0.0;
                              xs_start::Float64=3.8, delta_xs::Float64=1.e-4,
-                             dsa_model::Int64=2, thetaB::Float64=0.0,
-                             verbose::Bool=false)
+                             dsa_model::Union{Int64,<:AbstractShockAccelerationEfficiency}=2, 
+                             thetaB::Float64=0.0, verbose::Bool=false)
 
     xs_first_guess = xs_start
     p = RiemannParameters(Ul=Ul, Mach=Mach,
